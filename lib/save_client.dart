@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learn_firebase/update_user.dart';
 
 class SaveClient extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -55,16 +56,24 @@ class SaveClient extends StatelessWidget {
           StreamBuilder(
             stream: FirebaseFirestore.instance.collection('user').snapshots(), 
             builder: (context,snapshot){
-              List<Row> userWidgets = [];
+              List<Row> userWidgets = []; // this will be displayed
               if (snapshot.hasData) {
-                final users = snapshot.data?.docs.reversed.toList();
-                for (var user in users!) {
-                  final userWidget = Row(
+                final users = snapshot.data?.docs.reversed.toList(); // 'users' is the snapshot at a specific point in time
+                for (var user in users!) { // in here 'user' is not refere to the collaction name
+                  final userWidget = Row( // 'userWidget' is a row, which contains the details of the name, email, and the mobile number of the corresponding user
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(user['name']),
                       Text(user['email']),
                       Text(user['mobile']),
+                      // ** U ** update part (this part is a sub part of update part)
+                      IconButton(
+                        onPressed: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context)=>UpdateUser(userId: user.id)),);
+                        }, 
+                        icon: const Icon(Icons.edit)
+                      )
                     ],
                   );
                   userWidgets.add(userWidget);
@@ -76,8 +85,7 @@ class SaveClient extends StatelessWidget {
                 ),
               );
             }
-          )
-
+          ),
         ],
       ),
     );
