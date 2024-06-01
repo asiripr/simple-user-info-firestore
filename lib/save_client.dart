@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learn_firebase/update_user.dart';
 
 class SaveClient extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -65,6 +66,14 @@ class SaveClient extends StatelessWidget {
                       Text(user['name']),
                       Text(user['email']),
                       Text(user['mobile']),
+                      // ** U ** update part (this part is a sub part of update part)
+                      IconButton(
+                        onPressed: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context)=>UpdateUser(userId: user.id)));
+                        }, 
+                        icon: const Icon(Icons.edit)
+                      )
                     ],
                   );
                   userWidgets.add(userWidget);
@@ -77,8 +86,6 @@ class SaveClient extends StatelessWidget {
               );
             }
           ),
-          // ---------------------------------------------------------------------------
-          // ** U ** update part
         ],
       ),
     );
