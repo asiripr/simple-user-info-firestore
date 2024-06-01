@@ -32,6 +32,8 @@ class SaveClient extends StatelessWidget {
               hintText: "Mobile"
             ),
           ),
+          // ---------------------------------------------------------------------------
+          // ** C ** create part
           ElevatedButton(
             onPressed: (){
               CollectionReference collRef = FirebaseFirestore.instance.collection('user');
@@ -40,8 +42,42 @@ class SaveClient extends StatelessWidget {
                 'email':emailController.text,
                 'mobile':mobileController.text
               });
+              nameController.clear();
+              emailController.clear();
+              mobileController.clear();
             }, 
-            child: const Text("Add User"))
+            child: const Text("Add User")
+          ),
+          // ---------------------------------------------------------------------------
+          // ** R ** read part
+          const SizedBox(height: 30,),
+          const Text("---User Details---"),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('user').snapshots(), 
+            builder: (context,snapshot){
+              List<Row> userWidgets = [];
+              if (snapshot.hasData) {
+                final users = snapshot.data?.docs.reversed.toList();
+                for (var user in users!) {
+                  final userWidget = Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(user['name']),
+                      Text(user['email']),
+                      Text(user['mobile']),
+                    ],
+                  );
+                  userWidgets.add(userWidget);
+                }
+              }
+              return Expanded(
+                child: ListView(
+                  children: userWidgets,
+                ),
+              );
+            }
+          )
+
         ],
       ),
     );
