@@ -15,7 +15,6 @@ class _UpdateUserState extends State<UpdateUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Update User"),),
-      
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('user').doc(widget.userId).snapshots(),
         builder: (context, snapshot) {
