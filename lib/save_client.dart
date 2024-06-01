@@ -73,7 +73,15 @@ class SaveClient extends StatelessWidget {
                             MaterialPageRoute(builder: (context)=>UpdateUser(userId: user.id)),);
                         }, 
                         icon: const Icon(Icons.edit)
-                      )
+                      ),
+                      // ** D ** delete part ------------------------------------
+                      IconButton(
+                        onPressed: (){
+                          var collection = FirebaseFirestore.instance.collection('user');
+                          collection.doc(user.id).delete();
+                        }, 
+                        icon: const Icon(Icons.delete),
+                        )
                     ],
                   );
                   userWidgets.add(userWidget);
