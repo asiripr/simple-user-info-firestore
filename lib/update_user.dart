@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:learn_firebase/update_form.dart';
 
 class UpdateUser extends StatefulWidget {
   final String userId;
@@ -27,11 +28,10 @@ class _UpdateUserState extends State<UpdateUser> {
           var emailValue = output!['email'];
           var mobileValue = output!['mobile'];
 
-          print(nameValue);
-          print(emailValue);
-          print(mobileValue);
-          
-          return const Padding(padding: EdgeInsets.all(8.0)); 
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: UpdateForm(name: nameValue, email: emailValue, mobile: mobileValue, user: widget.userId,)
+          ); 
         },
       ),
     );
