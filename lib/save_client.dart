@@ -70,7 +70,7 @@ class SaveClient extends StatelessWidget {
                       IconButton(
                         onPressed: (){
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>UpdateUser(userId: user.id)));
+                            MaterialPageRoute(builder: (context)=>UpdateUser(userId: user.id)),);
                         }, 
                         icon: const Icon(Icons.edit)
                       )
